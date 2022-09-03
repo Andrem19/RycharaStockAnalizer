@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Core
 {
-    public static class Engine
+    public static class Engine_1
     {
         public async static void EngineRun()
         {

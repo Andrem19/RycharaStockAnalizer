@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Helpers
 {
-    public static class CountProfit
+    public static class TrigerToExit
     {
-        public static double Profit(DataModel openCandel, DataModel closeCandel)
+        public static bool Triger(DataModel candel)
         {
-            
+            return false;
         }
     }
 }
