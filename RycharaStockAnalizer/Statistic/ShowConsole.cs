@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RycharaStockAnalizer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ namespace RycharaStockAnalizer.Statistic
 {
     public static class ShowConsole
     {
-        public static string Show(double profit)
+        public static string Show(StatModel model)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"{Variables.Symbol_Data_1}-{Variables.Symbol_Data_2}");
-            sb.Append($"{Variables.OpenTime}--{Variables.CloseTime}");
-            sb.Append($"Profit: {profit}");
-            sb.Append($"{Variables.Direct.ToString()}");
+            sb.Append($"{Variables.I} ");
+            sb.Append($"{model.Pair}");
+            sb.Append($"{model.OpenTime}--{model.CloseTime}");
+            sb.Append($" Profit: {model.Profit}");
+            sb.Append($" {model.Direct.ToString()}");
 
-            if (profit > 0) Console.ForegroundColor = ConsoleColor.Magenta;
+            if (model.Profit > 0) Console.ForegroundColor = ConsoleColor.Green;
             else Console.ForegroundColor = ConsoleColor.Red;
             if (Variables.ShowConsole)
             {

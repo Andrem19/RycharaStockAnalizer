@@ -13,14 +13,16 @@ namespace RycharaStockAnalizer
     }
     public static class Variables
     {
+        //Settings 1
         public static string Symbol_Data_1 { get; set; } = "SPX500";
         public static List<DataModel> Data_1 { get; set; } = new List<DataModel>();
         public static string Data_1_TimeInterval = "1d";
         public static string Symbol_Data_2 { get; set; } = "ETHUSDT";
         public static List<DataModel> Data_2 { get; set; } = new List<DataModel>();
-        public static string Data_2_TimeInterval = "5m";
+        public static string Data_2_TimeInterval = "30m";
         public static string ResultTime = "5h";
 
+        //Settings 2
         public static bool ShowConsole { get; set; } = true;
         public static bool Logging { get; set; } = true;
         public static double ExchangeFeeTaker { get; set; } = 0.00040;
@@ -29,11 +31,13 @@ namespace RycharaStockAnalizer
         //Working variables
         public static Direction Direct { get; set; } = Direction.Buy;
         public static double OpenPrice { get; set; }
+        public static bool OpenPriceSet { get; set; } = false;
         public static DateTime OpenTime { get; set; }
         public static double ClosePrice { get; set; }
         public static DateTime CloseTime { get; set; }
         public static double ExFee { get; set; }
-
+        public static List<StatModel> StatisticModels { get; set; } = new List<StatModel>();
+        //=====================================
         public static double Funds { get; set; } = 20;
         public static double Amount { get; set; }
         public static double BaseAmount { get; set; } = 1;

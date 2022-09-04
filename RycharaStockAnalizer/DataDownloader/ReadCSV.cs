@@ -13,7 +13,7 @@ namespace RycharaStockAnalizer.DataDownloader
         public async static Task<List<DataModel>> ReadData(string symbol, string timeframe, bool spx)
         {
             string old = Variables.DataToTest == true ? "old" : "";
-            List<DataModel> values = File.ReadAllLines($"C:\\Users\\72555\\Desktop\\MarketData\\{symbol}\\{old}{timeframe}{symbol}.csv")
+            List<DataModel> values = File.ReadAllLines($"C:\\Users\\72555\\Desktop\\MarketData2\\{symbol}\\{old}{timeframe}{symbol}.csv")
                                           .Select(v => FromCsv(v, spx))
                                           .ToList();
             return values;
@@ -45,5 +45,4 @@ namespace RycharaStockAnalizer.DataDownloader
             return dailyValues;
         }
     }
-}
 }

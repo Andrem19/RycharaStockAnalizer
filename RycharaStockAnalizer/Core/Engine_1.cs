@@ -14,10 +14,9 @@ namespace RycharaStockAnalizer.Core
         {
             Variables.Data_1 = await ReadCSV.ReadData(Variables.Symbol_Data_1, Variables.Data_1_TimeInterval, true);
             Variables.Data_2 = await ReadCSV.ReadData(Variables.Symbol_Data_2, Variables.Data_2_TimeInterval, false);
-            while (true)
-            {
-                await AnalizerWorker.Worker(Variables.Data_1, Variables.Data_2);
-            }
+
+            await AnalizerWorker_1.Worker(Variables.Data_1, Variables.Data_2);
+
         }
     }
 }
