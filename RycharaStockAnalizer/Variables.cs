@@ -25,6 +25,8 @@ namespace RycharaStockAnalizer
         //Settings 2
         public static bool ShowConsole { get; set; } = true;
         public static bool Logging { get; set; } = true;
+        public static double PercentForTriggerP { get; set; } = 4;
+        public static double PercentForTriggerM { get; set; } = 2;
         public static double ExchangeFeeTaker { get; set; } = 0.00040;
         public static double ExchangeFeeMaker { get; set; } = 0.00020;
 
@@ -34,11 +36,15 @@ namespace RycharaStockAnalizer
         public static bool OpenPriceSet { get; set; } = false;
         public static DateTime OpenTime { get; set; }
         public static double ClosePrice { get; set; }
+        public static double CloseLimitP { get; set; }
+        public static double CloseLimitM { get; set; }
         public static DateTime CloseTime { get; set; }
         public static double ExFee { get; set; }
+        public static bool ExitByTrigger { get; set; } = false;
         public static List<StatModel> StatisticModels { get; set; } = new List<StatModel>();
+        public static List<MonthStat> MonthStatistic { get; set; } = new List<MonthStat>();
         //=====================================
-        public static double Funds { get; set; } = 20;
+        public static double Funds { get; set; } = 100;
         public static double Amount { get; set; }
         public static double BaseAmount { get; set; } = 1;
         public static int Digit { get; set; } = 3;

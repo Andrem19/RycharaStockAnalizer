@@ -11,7 +11,7 @@ namespace RycharaStockAnalizer.Helpers.Factors
     {
         public static bool IsItBull(DataModel model)
         {
-            if (model.open >= model.close)
+            if (Variables.Data_1[Variables.I].open >= Variables.Data_1[Variables.I].close)
             {
                 return false;
             }

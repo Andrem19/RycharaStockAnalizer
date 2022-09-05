@@ -22,7 +22,10 @@ namespace RycharaStockAnalizer.Statistic
                 }
                 else fail++;
             }
-            return $"Success: {success} Fail: {fail} Profit: {Profit}";
+            double all = success + fail;
+            double onePerc = all / 100;
+            double percent = Math.Round(success / onePerc, 3);
+            return $"Success: {success} Fail: {fail} PercentSC: {percent} Profit: {Math.Round(Profit, 3)}";
         }
     }
 }

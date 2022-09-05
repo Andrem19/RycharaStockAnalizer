@@ -12,11 +12,14 @@ namespace RycharaStockAnalizer.Statistic
         public static StatModel CreateStat()
         {
             StatModel Model = new();
-            Model.Iter = Variables.I;
+            Model.I = Variables.I;
             Model.OpenTime = Variables.OpenTime;
             Model.CloseTime = Variables.CloseTime;
-            Model.Direct = Variables.Direct;
+            Model.OpenPrice = Variables.OpenPrice;
+            Model.ClosePrice = Variables.ClosePrice;
+            Model.Direct = Variables.Direct.ToString();
             Model.Profit = Calculate.CalculateProfit();
+            Model.Trig = Variables.ExitByTrigger;
             Model.Pair = Variables.Symbol_Data_1 + "-" + Variables.Symbol_Data_2;
             return Model;
         }
