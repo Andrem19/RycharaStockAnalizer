@@ -20,13 +20,14 @@ namespace RycharaStockAnalizer
         public static string Symbol_Data_2 { get; set; } = "ETHUSDT";
         public static List<DataModel> Data_2 { get; set; } = new List<DataModel>();
         public static string Data_2_TimeInterval = "15m";
-        public static string ResultTime = "2h";
+        public static string ResultTime = "9h";
 
         //Settings 2
+        public static int IsItBullCount { get; set; } = 4;
         public static bool ShowConsole { get; set; } = true;
         public static bool Logging { get; set; } = true;
-        public static double PercentForTriggerP { get; set; } = 2;
-        public static double PercentForTriggerM { get; set; } = 1.7;
+        public static double PercentForTriggerP { get; set; } = 8;
+        public static double PercentForTriggerM { get; set; } = 8;
         public static double ExchangeFeeTaker { get; set; } = 0.00040;
         public static double ExchangeFeeMaker { get; set; } = 0.00020;
 

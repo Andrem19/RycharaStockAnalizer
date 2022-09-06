@@ -14,22 +14,25 @@ namespace RycharaStockAnalizer.Analizer
     {
         public static async Task Worker(List<DataModel> Data_1, List<DataModel> Data_2)
         {
-            for (int i = 2; i < Data_1.Count - 2; i++)
+            for (int i = 2; i < Data_1.Count - 11; i++)
             {
                 if (Variables.DayOfYears == UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].open_time).DayOfYear)
                 {
                     continue;
                 }
+                //if (i == 1885)
+                //{
+                //    Console.WriteLine();
+                //}
                 Variables.I = i;
-                Variables.Direct = Candel.IsItBull(Data_1[i]) ? Direction.Buy : Direction.Sell;
-                double timeCheck = Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime);
-                Variables.OpenTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time);
+                Variables.Direct = Candels.IsItBull(Variables.IsItBullCount) ? Direction.Buy : Direction.Sell;
+                Variables.OpenTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i+ Variables.IsItBullCount-1].close_time);
                 Variables.DayOfYears = Variables.OpenTime.DayOfYear;
 
-                for (int j = Variables.J; j < Data_2.Count; j++)
+                for (int j = Variables.J; j < Data_2.Count-11; j++)
                 {
                     Variables.J = j;
-                    if (Data_2[j].open_time >= Data_1[i].close_time)
+                    if (Data_2[j].open_time >= Data_1[i + Variables.IsItBullCount - 1].close_time)
                     {
                         if (!Variables.OpenPriceSet)
                         {
@@ -43,19 +46,19 @@ namespace RycharaStockAnalizer.Analizer
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
                             break;
                         }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime))
+                        if (Data_2[j].close_time >= Data_1[i + Variables.IsItBullCount - 1].close_time + ConverterIntToSec.Converting(Variables.ResultTime))
                         {
                             Variables.ClosePrice = Data_2[j].close;
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
                             break;
                         }
                     }
-                    if (Data_2[j].close_time >= Data_1[i + 4].close_time || j == Data_2.Count - 11)
+                    if (Data_2[j].close_time >= Data_1[i + 9].close_time || j == Data_2.Count - 10)
                     {
                         break;
                     }
                 }
-                if (Variables.OpenPrice != 0)
+                if (Variables.OpenPrice != 0 && Variables.ClosePrice != 0)
                 {
                     Variables.StatisticModels.Add(CompleteStatistic.CreateStat());
                     ShowConsole.Show(Variables.StatisticModels[Variables.StatisticModels.Count - 1]);
