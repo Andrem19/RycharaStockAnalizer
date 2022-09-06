@@ -17,13 +17,11 @@ namespace RycharaStockAnalizer.Helpers
                 if (candel.high > Variables.CloseLimitP)
                 {
                     Variables.ClosePrice = Variables.CloseLimitP;
-                    Variables.ExitByTrigger = true;
                     return true;
                 }
                 else if (candel.low < Variables.CloseLimitM)
                 {
                     Variables.ClosePrice = Variables.CloseLimitM;
-                    Variables.ExitByTrigger = true;
                     return true;
                 }
             }
@@ -32,13 +30,11 @@ namespace RycharaStockAnalizer.Helpers
                 if (candel.high > Variables.CloseLimitM)
                 {
                     Variables.ClosePrice = Variables.CloseLimitM;
-                    Variables.ExitByTrigger = true;
                     return true;
                 }
                 else if (candel.low < Variables.CloseLimitP)
                 {
                     Variables.ClosePrice = Variables.CloseLimitP;
-                    Variables.ExitByTrigger = true;
                     return true;
                 }
             }

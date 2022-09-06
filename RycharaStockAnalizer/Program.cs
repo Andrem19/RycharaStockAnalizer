@@ -6,7 +6,7 @@ namespace RycharaStockAnalizer
     {
         public static void Main()
         {
-            Engine_1.EngineRun();
+            Engine_2.EngineRun();
         }
     }
 }

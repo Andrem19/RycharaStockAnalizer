@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Core
 {
-    public static class Engine_1
+    public static class Engine_2
     {
         public async static void EngineRun()
         {
-            bool trig = Variables.Symbol_Data_1 == "SPX500"? true : false;
-            Variables.Data_1 = await ReadCSV.ReadData(Variables.Symbol_Data_1, Variables.Data_1_TimeInterval, trig);
+            Variables.Data_1 = await ReadCSV.ReadData(Variables.Symbol_Data_1, Variables.Data_1_TimeInterval, false);
             Variables.Data_2 = await ReadCSV.ReadData(Variables.Symbol_Data_2, Variables.Data_2_TimeInterval, false);
 
-            await AnalizerWorker_1.Worker(Variables.Data_1, Variables.Data_2);
+            await AnalizerWorker_2.Worker(Variables.Data_1, Variables.Data_2);
 
         }
     }

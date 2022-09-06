@@ -26,5 +26,6 @@ namespace RycharaStockAnalizer.Models
         public double October { get; set; } = 0;
         public double November { get; set; } = 0;
         public double December { get; set; } = 0;
+        public double FullYear { get; set; } = 0;
     }
 }

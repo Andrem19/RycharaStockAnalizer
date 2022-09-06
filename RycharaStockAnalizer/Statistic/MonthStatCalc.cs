@@ -106,6 +106,22 @@ namespace RycharaStockAnalizer.Statistic
                     }
                 }
             }
+            for (int i = 0; i < Variables.MonthStatistic.Count; i++)
+            {
+                Variables.MonthStatistic[i].FullYear 
+                    = Variables.MonthStatistic[i].January
+                    + Variables.MonthStatistic[i].Fabruary
+                    + Variables.MonthStatistic[i].March
+                    + Variables.MonthStatistic[i].April
+                    + Variables.MonthStatistic[i].May
+                    + Variables.MonthStatistic[i].June
+                    + Variables.MonthStatistic[i].July
+                    + Variables.MonthStatistic[i].August
+                    + Variables.MonthStatistic[i].September
+                    + Variables.MonthStatistic[i].October
+                    + Variables.MonthStatistic[i].November
+                    + Variables.MonthStatistic[i].December;
+            }
         }
     }
 }

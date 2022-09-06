@@ -10,42 +10,26 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Analizer
 {
-    public static class AnalizerWorker_1
+    public static class AnalizerWorker_2
     {
         public static async Task Worker(List<DataModel> Data_1, List<DataModel> Data_2)
         {
             for (int i = 2; i < Data_1.Count - 2; i++)
             {
-                if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Thursday")
-                {
-                    Variables.Funds = 200;
-                }
-                else if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Monday")
+                if (Variables.DayOfYears == UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].open_time).DayOfYear)
                 {
                     continue;
                 }
-                else
-                {
-                    Variables.Funds = 100;
-                }
-                //double high = Data_1[i].high - Data_1[i].low;
-                //if (Data_1[i].volume < 700000000)
-                //{
-                //    continue;
-                //}
-                //if (i == 300)
-                //{
-                //    break;
-                //}
                 Variables.I = i;
                 Variables.Direct = Candel.IsItBull(Data_1[i]) ? Direction.Buy : Direction.Sell;
-
                 double timeCheck = Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime);
                 Variables.OpenTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time);
+                Variables.DayOfYears = Variables.OpenTime.DayOfYear;
+
                 for (int j = Variables.J; j < Data_2.Count; j++)
                 {
                     Variables.J = j;
-                    if (Data_2[j].open_time >= Data_1[i].close_time && Data_2[j].open_time < Data_1[i+1].close_time)
+                    if (Data_2[j].open_time >= Data_1[i].close_time)
                     {
                         if (!Variables.OpenPriceSet)
                         {
@@ -62,31 +46,11 @@ namespace RycharaStockAnalizer.Analizer
                         if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime))
                         {
                             Variables.ClosePrice = Data_2[j].close;
-                            if (Calculate.CalculateProfit() > (Variables.Funds /100) * 0.2)
-                            {
-                                Variables.ClosePrice = Data_2[j].close;
-                                Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
-                                break;
-                            }
-                        }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime) * 2)
-                        {
-                            Variables.ClosePrice = Data_2[j].close;
-                            if (Calculate.CalculateProfit() > 0)
-                            {
-                                Variables.ClosePrice = Data_2[j].close;
-                                Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
-                                break;
-                            }
-                        }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime) * 3)
-                        {
-                            Variables.ClosePrice = Data_2[j].close;
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
                             break;
                         }
                     }
-                    if (Data_2[j].close_time >= Data_1[i+1].close_time || j == Data_2.Count - 11)
+                    if (Data_2[j].close_time >= Data_1[i + 4].close_time || j == Data_2.Count - 11)
                     {
                         break;
                     }
