@@ -28,15 +28,6 @@ namespace RycharaStockAnalizer.Analizer
                 {
                     Variables.Funds = 100;
                 }
-                //double high = Data_1[i].high - Data_1[i].low;
-                //if (Data_1[i].volume < 700000000)
-                //{
-                //    continue;
-                //}
-                //if (i == 300)
-                //{
-                //    break;
-                //}
                 Variables.I = i;
                 Variables.Direct = Candel.IsItBull(Data_1[i]) ? Direction.Buy : Direction.Sell;
 
@@ -62,7 +53,7 @@ namespace RycharaStockAnalizer.Analizer
                         if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime))
                         {
                             Variables.ClosePrice = Data_2[j].close;
-                            if (Calculate.CalculateProfit() > (Variables.Funds /100) * 0.2)
+                            if (Calculate.CalculateProfit() > (Variables.Funds /100) * 0.5)
                             {
                                 Variables.ClosePrice = Data_2[j].close;
                                 Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
@@ -86,12 +77,8 @@ namespace RycharaStockAnalizer.Analizer
                             break;
                         }
                     }
-                    if (Data_2[j].close_time >= Data_1[i+1].close_time || j == Data_2.Count - 11)
-                    {
-                        break;
-                    }
                 }
-                if (Variables.OpenPrice != 0)
+                if (Variables.OpenPrice != 0 || Variables.ClosePrice != 0)
                 {
                     Variables.StatisticModels.Add(CompleteStatistic.CreateStat());
                     ShowConsole.Show(Variables.StatisticModels[Variables.StatisticModels.Count - 1]);

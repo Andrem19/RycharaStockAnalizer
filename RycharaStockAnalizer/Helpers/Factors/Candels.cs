@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RycharaStockAnalizer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +7,32 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Helpers.Factors
 {
+    public enum BuySell
+    {
+        Buy,
+        Sell,
+        Non
+    }
     public static class Candels
     {
-        public static bool IsItBull(int count)
+        public static BuySell IsItBull(List<DataModel> OneDay)
         {
-            if (Variables.Data_1[Variables.I].open > Variables.Data_1[Variables.I + count - 1].close)
+            double high = 0;
+            for (int i = 0; i < OneDay.Count; i++)
             {
-                return false;
+                high += OneDay[i].high - OneDay[i].low;
             }
-            else
+            high /= OneDay.Count;
+            if (OneDay[0].open > OneDay[OneDay.Count - 1].close)
             {
-                return true;
+                return BuySell.Sell;
             }
+            else if (OneDay[0].open < OneDay[OneDay.Count -1].close)
+            {
+                return BuySell.Buy;
+
+            }
+            return BuySell.Non;
         }
     }
 }

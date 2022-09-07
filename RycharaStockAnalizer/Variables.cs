@@ -20,14 +20,13 @@ namespace RycharaStockAnalizer
         public static string Symbol_Data_2 { get; set; } = "ETHUSDT";
         public static List<DataModel> Data_2 { get; set; } = new List<DataModel>();
         public static string Data_2_TimeInterval = "15m";
-        public static string ResultTime = "9h";
+        public static string ResultTime = "4h";
 
         //Settings 2
-        public static int IsItBullCount { get; set; } = 4;
         public static bool ShowConsole { get; set; } = true;
         public static bool Logging { get; set; } = true;
         public static double PercentForTriggerP { get; set; } = 8;
-        public static double PercentForTriggerM { get; set; } = 8;
+        public static double PercentForTriggerM { get; set; } = 2;
         public static double ExchangeFeeTaker { get; set; } = 0.00040;
         public static double ExchangeFeeMaker { get; set; } = 0.00020;
 
@@ -43,9 +42,11 @@ namespace RycharaStockAnalizer
         public static int DayOfYears { get; set; }
         public static double ExFee { get; set; }
         public static bool ExitByTrigger { get; set; } = false;
+        public static List<DataModel> OneDay { get; set; } = new List<DataModel>();
         public static List<StatModel> StatisticModels { get; set; } = new List<StatModel>();
         public static List<MonthStat> MonthStatistic { get; set; } = new List<MonthStat>();
         //=====================================
+        public static double FactorKof { get; set; }
         public static double Funds { get; set; } = 20;
         public static double Amount { get; set; }
         public static double BaseAmount { get; set; } = 1;
