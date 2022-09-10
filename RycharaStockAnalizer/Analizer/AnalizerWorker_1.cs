@@ -29,9 +29,21 @@ namespace RycharaStockAnalizer.Analizer
                     Variables.Funds = 100;
                 }
                 Variables.I = i;
-                Variables.Direct = Candel.IsItBull(Data_1[i]) ? Direction.Buy : Direction.Sell;
+                BuySell res = Candel.IsItBull(Data_1[i]);
+                if (res == BuySell.Buy)
+                {
+                    Variables.Direct = Direction.Buy;
+                }
+                else if (res == BuySell.Sell)
+                {
+                    Variables.Direct = Direction.Sell;
+                }
+                else
+                {
+                    continue;
+                }
 
-                double timeCheck = Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime);
+                double timeCheck = Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime1);
                 Variables.OpenTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time);
                 for (int j = Variables.J; j < Data_2.Count; j++)
                 {
@@ -50,7 +62,7 @@ namespace RycharaStockAnalizer.Analizer
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
                             break;
                         }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime))
+                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime1))
                         {
                             Variables.ClosePrice = Data_2[j].close;
                             if (Calculate.CalculateProfit() > (Variables.Funds /100) * 0.5)
@@ -60,7 +72,7 @@ namespace RycharaStockAnalizer.Analizer
                                 break;
                             }
                         }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime) * 2)
+                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime1) * 2)
                         {
                             Variables.ClosePrice = Data_2[j].close;
                             if (Calculate.CalculateProfit() > 0)
@@ -70,7 +82,7 @@ namespace RycharaStockAnalizer.Analizer
                                 break;
                             }
                         }
-                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime) * 3)
+                        if (Data_2[j].close_time >= Data_1[i].close_time + ConverterIntToSec.Converting(Variables.ResultTime1) * 3)
                         {
                             Variables.ClosePrice = Data_2[j].close;
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
@@ -85,9 +97,9 @@ namespace RycharaStockAnalizer.Analizer
                     ResetVars.ResetVariables();
                 }
             }
-            Console.WriteLine(GeneralStat.CalcStat());
+            GeneralStat.CalcStat();
             MonthStatCalc.Calc();
-            WriteModel<MonthStat>.Write(Variables.MonthStatistic);
+            WriteModel<MonthStat>.WriteList(Variables.MonthStatistic);
         }
     }
 }

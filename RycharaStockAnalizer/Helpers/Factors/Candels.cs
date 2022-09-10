@@ -18,16 +18,33 @@ namespace RycharaStockAnalizer.Helpers.Factors
         public static BuySell IsItBull(List<DataModel> OneDay)
         {
             double high = 0;
+            double vol = 0;
+            double body = 0;
             for (int i = 0; i < OneDay.Count; i++)
             {
                 high += OneDay[i].high - OneDay[i].low;
+                vol += OneDay[i].volume;
+                if (OneDay[i].open> OneDay[i].close)
+                {
+                    body += OneDay[i].open - OneDay[i].close;
+                }
+                body += OneDay[i].close - OneDay[i].open;
             }
+            body /= OneDay.Count;
             high /= OneDay.Count;
-            if (OneDay[0].open > OneDay[OneDay.Count - 1].close)
+            vol /= OneDay.Count;
+            Variables.Body = body;
+            Variables.High = high;
+            Variables.Vol = vol;
+            if (OneDay.Count < (int)Variables.FactorCandel)
+            {
+                return BuySell.Non;
+            }
+            if (OneDay[Variables.FactorCandelStart].open > OneDay[OneDay.Count - (int)Variables.FactorCandel].close)
             {
                 return BuySell.Sell;
             }
-            else if (OneDay[0].open < OneDay[OneDay.Count -1].close)
+            else if (OneDay[Variables.FactorCandelStart].open < OneDay[OneDay.Count - (int)Variables.FactorCandel].close)
             {
                 return BuySell.Buy;
 

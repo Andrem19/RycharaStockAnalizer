@@ -14,6 +14,7 @@ namespace RycharaStockAnalizer.Helpers
             Variables.ClosePrice = 0;
             Variables.OpenPriceSet = false;
             Variables.ExitByTrigger = false;
+            Variables.ExitByTrigger2 = false;
             Variables.OneDay.Clear();
         }
     }

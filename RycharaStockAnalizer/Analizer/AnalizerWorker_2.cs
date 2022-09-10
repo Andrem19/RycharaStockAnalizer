@@ -24,12 +24,12 @@ namespace RycharaStockAnalizer.Analizer
                 Variables.DayOfYears = UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].open_time).DayOfYear;
 
                 Variables.OneDay.Add(Data_1[i]);
-                if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i+1].open_time).DayOfYear == Variables.DayOfYears)
+                if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i + 1].open_time).DayOfYear == Variables.DayOfYears)
                 {
                     continue;
                 }
 
-                if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Friday")
+                if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Thursday")
                 {
                     Variables.Funds = 200;
                 }
@@ -54,7 +54,9 @@ namespace RycharaStockAnalizer.Analizer
                 {
                     continue;
                 }
-                double OpenT = SetTime19_00.SetT();
+                double OpenT = Variables.OneDay[Variables.OneDay.Count - (int)Variables.FactorCandel].close_time;
+                //double OpenT = SetTime19_00.SetT();
+                //double OpenT = Data_1[i].close_time;
                 Variables.OpenTime = UnixTimeHelper.UnixTimeStampToDateTime(OpenT);
 
                 for (int j = Variables.J; j < Data_2.Count-11; j++)
@@ -66,52 +68,47 @@ namespace RycharaStockAnalizer.Analizer
                         {
                             Variables.OpenPrice = Data_2[j].open;
                             SetCloseLimit.SetClose();
+                            SetCloseLimit2.SetClose();
                             Variables.OpenPriceSet = true;
+                        }
+                        if (Data_2[j].close_time >= OpenT + ConverterIntToSec.Converting(Variables.ResultTime1))
+                        {
+                            if (TrigerToExit2.Triger(Data_2[j]))
+                            {
+                                Variables.ExitByTrigger2 = true;
+                                Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
+                                break;
+                            }
+                        }
+                        if (Data_2[j].close_time >= OpenT + ConverterIntToSec.Converting(Variables.ResultTime2))
+                        {
+                            Variables.ClosePrice = Data_2[j].open;
+                            Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
+                            break;
                         }
                         if (TrigerToExit.Triger(Data_2[j]))
                         {
                             Variables.ExitByTrigger = true;
                             Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
                             break;
-                        }
-                        if (Data_2[j].close_time >= OpenT + ConverterIntToSec.Converting(Variables.ResultTime))
-                        {
-                            Variables.ClosePrice = Data_2[j].close;
-                            if (Calculate.CalculateProfit() > (Variables.Funds / 100) * 0.5)
-                            {
-                                Variables.ClosePrice = Data_2[j].close;
-                                Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
-                                break;
-                            }
-                        }
-                        if (Data_2[j].close_time >= OpenT + ConverterIntToSec.Converting(Variables.ResultTime) * 3)
-                        {
-                            Variables.ClosePrice = Data_2[j].close;
-                            if (Calculate.CalculateProfit() > 0)
-                            {
-                                Variables.ClosePrice = Data_2[j].close;
-                                Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
-                                break;
-                            }
-                        }
-                        if (Data_2[j].close_time >= OpenT + ConverterIntToSec.Converting(Variables.ResultTime) * 4)
-                        {
-                            Variables.ClosePrice = Data_2[j].close;
-                            Variables.CloseTime = UnixTimeHelper.UnixTimeStampToDateTime(Data_2[j].close_time);
-                            break;
-                        }
+                        }                        
                     }
                 }
                 if (Variables.OpenPrice != 0 && Variables.ClosePrice != 0)
                 {
                     Variables.StatisticModels.Add(CompleteStatistic.CreateStat());
-                    //ShowConsole.Show(Variables.StatisticModels[Variables.StatisticModels.Count - 1]);
+                    if (Variables.SingleMod)
+                    {
+                        ShowConsole.Show(Variables.StatisticModels[Variables.StatisticModels.Count - 1]);
+                    }
                     ResetVars.ResetVariables();
                 }
             }
-            Console.WriteLine(GeneralStat.CalcStat());
-            MonthStatCalc.Calc();
-            WriteModel<MonthStat>.Write(Variables.MonthStatistic);
+            GeneralStat.CalcStat();
+            if (Variables.SingleMod)
+            {
+                WriteModel<MonthStat>.WriteList(Variables.MonthStatistic);
+            }
         }
     }
 }

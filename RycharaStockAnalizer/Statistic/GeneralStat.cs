@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RycharaStockAnalizer.Helpers;
+using RycharaStockAnalizer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +11,7 @@ namespace RycharaStockAnalizer.Statistic
 {
     public static class GeneralStat
     {
-        public static string CalcStat()
+        public async static void CalcStat()
         {
             int success = 0;
             int fail = 0;
@@ -25,6 +28,8 @@ namespace RycharaStockAnalizer.Statistic
             double BodyFail = 0;
             int SuccessTrig = 0;
             int FailTrig = 0;
+            int SuccessTrig2 = 0;
+            int FailTrig2 = 0;
             double AvProfP = 0;
             double AvProfM = 0;
             int Monday = 0;
@@ -73,6 +78,7 @@ namespace RycharaStockAnalizer.Statistic
                     HighSuccess += Variables.StatisticModels[i].Data_1_high;
                     BodySuccess += Variables.StatisticModels[i].Body;
                     if (Variables.StatisticModels[i].Trig) SuccessTrig++;
+                    if (Variables.StatisticModels[i].Trig2) SuccessTrig2++;
                     success++;
                 }
                 else if (Variables.StatisticModels[i].Profit < 0)
@@ -108,6 +114,7 @@ namespace RycharaStockAnalizer.Statistic
                     HighFail += Variables.StatisticModels[i].Data_1_high;
                     BodyFail += Variables.StatisticModels[i].Body;
                     if (Variables.StatisticModels[i].Trig) FailTrig++;
+                    if (Variables.StatisticModels[i].Trig2) FailTrig2++;
                     fail++;
                 }
                 
@@ -123,9 +130,73 @@ namespace RycharaStockAnalizer.Statistic
             double BFail = BodyFail / fail;
             double AvarageProfP = AvProfP / success;
             double AvarageProfM = AvProfM / fail;
-            return $"Success: {success} Fail: {fail} PercentSC: {percent} Profit: {Math.Round(Profit, 3)} Monday: {Monday} Tuesday: {Tuesday} Wednesday: {Wednesday} Thursday: {Thursday} Friday: {Friday} | MondayM: {MondayM} TuesdayM: {TuesdayM} WednesdayM: {WednesdayM} ThursdayM: {ThursdayM} FridayM: {FridayM} SuccessTrig: {SuccessTrig} FailTrig: {FailTrig} AvProfP: {AvarageProfP} AvProfM: {AvarageProfM}";
-            //BuySuccess: {BuySuccess} SellSuccess: {SellSuccess} BuyFail: {BuyFail} SellFail: {SellFail} VolSuccess: {VSuc} VolFail: {VFail} HighSuccess: {HSuc} HighFail: {HFail} BodySuccess: {BSuc} BodyFail: {BFail}
-            //SuccessTrig: {SuccessTrig} FailTrig: {FailTrig} AvProfP: {AvarageProfP} AvProfM: {AvarageProfM}
+            int MonthSC = 0;
+            int MonthFL = 0;
+            MonthStatCalc.Calc();
+            for (int i = 0; i < Variables.MonthStatistic.Count; i++)
+            {
+                if (Variables.MonthStatistic[i].January > 0 && Variables.MonthStatistic[i].January != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].January != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].Fabruary > 0 && Variables.MonthStatistic[i].Fabruary != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].Fabruary != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].March > 0 && Variables.MonthStatistic[i].March != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].March != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].April > 0 && Variables.MonthStatistic[i].April != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].April != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].May > 0 && Variables.MonthStatistic[i].May != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].May != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].June > 0 && Variables.MonthStatistic[i].June != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].June != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].July > 0 && Variables.MonthStatistic[i].July != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].July != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].August > 0 && Variables.MonthStatistic[i].August != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].August != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].September > 0 && Variables.MonthStatistic[i].September != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].September != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].October > 0 && Variables.MonthStatistic[i].October != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].October != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].November > 0 && Variables.MonthStatistic[i].November != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].November != 0) MonthFL += 1;
+                if (Variables.MonthStatistic[i].December > 0 && Variables.MonthStatistic[i].December != 0) MonthSC += 1;
+                else if (Variables.MonthStatistic[i].December != 0) MonthFL += 1;
+
+            }
+            Variables.LogModel.Profit = Math.Round(Profit, 3);
+            Variables.LogModel.PercSC = percent;
+            Variables.LogModel.PercentForTriggerM = Variables.PercentForTriggerM;
+            Variables.LogModel.PercentForTriggerP = Variables.PercentForTriggerP;
+            Variables.LogModel.ResultTime1 = Variables.ResultTime1;
+            Variables.LogModel.ResultTime2 = Variables.ResultTime2;
+            Variables.LogModel.PercSecExitP = Variables.PercForSecExitP;
+            Variables.LogModel.PercSecExitM = Variables.PercForSecExitM;
+            Variables.LogModel.Count = Variables.StatisticModels.Count;
+            //Variables.LogModel.FactorLong = Variables.FactorLong;
+            Variables.LogModel.FactorCandel = Variables.FactorCandel;
+            Variables.LogModel.FactorCandelStart = Variables.FactorCandelStart;
+            Variables.LogModel.MonthSCFL = MonthSC.ToString() + "/" + MonthFL.ToString();
+            Variables.LogModel.AvProfSCFL = AvarageProfP.ToString() + "/" + AvarageProfM.ToString();
+            if (Variables.SingleMod)
+            {
+                Console.WriteLine($"Success: {success} Fail: {fail} ");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"PercentSC: {percent} Profit: {Math.Round(Profit, 3)}  SuccessTrig: {SuccessTrig} FailTrig: {FailTrig} SuccessTrig2: {SuccessTrig2} FailTrig2: {FailTrig2} AvProfP: {AvarageProfP} AvProfM: {AvarageProfM} BuySuccess: {BuySuccess} SellSuccess: {SellSuccess} BuyFail: {BuyFail} SellFail: {SellFail}");
+                Console.ResetColor();
+                Console.WriteLine($" Monday: {Monday} Tuesday: {Tuesday} Wednesday: {Wednesday} Thursday: {Thursday} Friday: {Friday} | MondayM: {MondayM} TuesdayM: {TuesdayM} WednesdayM: {WednesdayM} ThursdayM: {ThursdayM} FridayM: {FridayM} VolSuccess: {VSuc} VolFail: {VFail} HighSuccess: {HSuc} HighFail: {HFail} BodySuccess: {BSuc} BodyFail: {BFail}");
+                Console.WriteLine(JsonConvert.SerializeObject(Variables.LogModel));
+            }
+            else
+            {
+                if (Variables.LastPriceFind < Profit || (Variables.LastPercentFind < percent && Profit > 200))
+                {
+                    if (Variables.LastPriceFind < Profit) Variables.LastPriceFind = Profit;
+                    if (Variables.LastPercentFind < percent) Variables.LastPercentFind = percent;
+                    await SaveLog.Logging("Logging", Variables.LogModel);
+                }
+            }
+            if (MonthFL <= 10 && Profit > 210)
+            {
+                WriteModel<LogModel>.WriteOne(Variables.LogModel);
+            }
         }
     }
 }

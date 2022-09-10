@@ -13,12 +13,6 @@ namespace RycharaStockAnalizer.Statistic
         public static string Show(StatModel model)
         {
             string output = JsonConvert.SerializeObject(model);
-            //StringBuilder sb = new StringBuilder();
-            //sb.Append($"{Variables.I} ");
-            //sb.Append($"{model.Pair}");
-            //sb.Append($"{model.OpenTime}--{model.CloseTime}");
-            //sb.Append($" Profit: {model.Profit}");
-            //sb.Append($" {model.Direct.ToString()}");
 
             if (model.Profit > 0) Console.ForegroundColor = ConsoleColor.Green;
             else Console.ForegroundColor = ConsoleColor.Red;

@@ -17,10 +17,10 @@ namespace RycharaStockAnalizer.Helpers
                 return getrandom.Next(min, max);
             }
         }
-        public static double RandomNum()
+        public static double RandomNum(int min1, int max1, int min2, int max2)
         {
-            int num = GetRandom.GetRandomNumber(1, 10);
-            int num2 = GetRandom.GetRandomNumber(1, 5);
+            int num = GetRandom.GetRandomNumber(min1, max1);
+            int num2 = GetRandom.GetRandomNumber(min2, max2);
             return (double)num / (double)num2;
         }
     }

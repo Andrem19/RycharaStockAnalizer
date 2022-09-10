@@ -16,6 +16,7 @@ namespace RycharaStockAnalizer.Models
         public double OpenPrice { get; set; }
         public double ClosePrice { get; set; }
         public bool Trig { get; set; }
+        public bool Trig2 { get; set; }
         public double Data_1_Vol { get; set; }
         public double Data_1_high { get; set; }
         public double Body { get; set; }

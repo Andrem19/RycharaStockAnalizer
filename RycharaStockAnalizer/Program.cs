@@ -1,4 +1,5 @@
 ﻿using RycharaStockAnalizer.Core;
+using RycharaStockAnalizer.Helpers;
 using RycharaStockAnalizer.Statistic;
 
 namespace RycharaStockAnalizer
@@ -8,30 +9,16 @@ namespace RycharaStockAnalizer
         public static async Task Main()
         {
             //await Engine_1.EngineRun();
-            //Variables.MonthStatistic.Clear();
-            //Variables.StatisticModels.Clear();
-            //Variables.Data_1.Clear();
-            //Variables.Data_2.Clear();
-            //Variables.I = 0;
-            //Variables.J = 0;
-            for (int i = 0; i < 100; i++)
+            //ResetGlobalVars.Reset();
+            if (Variables.SingleMod)
             {
-                await Engine_2.EngineRun();
-                Variables.MonthStatistic.Clear();
-                Variables.StatisticModels.Clear();
-                Variables.Data_1.Clear();
-                Variables.Data_2.Clear();
-                Variables.I = 0;
-                Variables.J = 0;
+                await Engine_2Single.EngineRun();
+            }
+            else
+            {
+                await Engine_2Multi.EngineRun();
             }
             
-
-            //int cou = Variables.StatisticModels1.Count > Variables.StatisticModels2.Count ? Variables.StatisticModels1.Count : Variables.StatisticModels2.Count;
-            //for (int i = 0; i < cou; i++)
-            //{
-            //    ShowConsole.Show(Variables.StatisticModels1[i]);
-            //    ShowConsole.Show(Variables.StatisticModels2[i+1]);
-            //}
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RycharaStockAnalizer.Core
 {
-    public static class Engine_2
+    public static class Engine_2Single
     {
         public async static Task EngineRun()
         {
@@ -17,7 +17,6 @@ namespace RycharaStockAnalizer.Core
             Variables.Data_2 = await ReadCSV.ReadData(Variables.Symbol_Data_2, Variables.Data_2_TimeInterval, false);
 
             await AnalizerWorker_2.Worker(Variables.Data_1, Variables.Data_2);
-
         }
     }
 }

@@ -9,13 +9,13 @@ namespace RycharaStockAnalizer.Helpers.Factors
 {
     public static class Candel
     {
-        public static bool IsItBull(DataModel model)
+        public static BuySell IsItBull(DataModel model)
         {
             if (Variables.Data_1[Variables.I].open >= Variables.Data_1[Variables.I].close)
             {
-                return false;
+                return BuySell.Sell;
             }
-            return true;
+            return BuySell.Buy;
         }
     }
 }

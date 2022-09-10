@@ -9,7 +9,7 @@ namespace RycharaStockAnalizer.Helpers
 {
     public static class WriteModel<T>
     {
-        public static void Write(List<T> Model)
+        public static void WriteList(List<T> Model)
         {
             for (int i = 0; i < Model.Count; i++)
             {
@@ -18,6 +18,14 @@ namespace RycharaStockAnalizer.Helpers
                 Console.WriteLine(output);
                 Console.ResetColor();
             }
+
+        }
+        public static void WriteOne(T Model)
+        {
+            string output = JsonConvert.SerializeObject(Model);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(output);
+            Console.ResetColor();
 
         }
     }
