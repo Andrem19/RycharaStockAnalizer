@@ -32,6 +32,8 @@ namespace RycharaStockAnalizer.Analizer
                 if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Thursday")
                 {
                     Variables.Funds = 200;
+                    Variables.PercentForTriggerM = 2.0;
+                    Variables.PercForSecExitM = 1.5;
                 }
                 else if (UnixTimeHelper.UnixTimeStampToDateTime(Data_1[i].close_time).DayOfWeek.ToString() == "Monday")
                 {
@@ -39,6 +41,8 @@ namespace RycharaStockAnalizer.Analizer
                 }
                 else
                 {
+                    Variables.PercentForTriggerM = 3.5;
+                    Variables.PercForSecExitM = 2.0;
                     Variables.Funds = 100;
                 }
                 BuySell res = Candels.IsItBull(Variables.OneDay);
