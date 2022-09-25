@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plotly.NET.CSharp;
+using static Plotly.NET.StyleParam.LinearAxisId;
 
 namespace RycharaStockAnalizer.Statistic
 {
@@ -161,6 +163,22 @@ namespace RycharaStockAnalizer.Statistic
                 else if (Variables.MonthStatistic[i].December != 0) MonthFL += 1;
 
             }
+            List<double> line = new List<double>();
+            for (int i = 0; i < Variables.MonthStatistic.Count; i++)
+            {
+                line.Add(Variables.MonthStatistic[i].January);
+                line.Add(Variables.MonthStatistic[i].Fabruary);
+                line.Add(Variables.MonthStatistic[i].March);
+                line.Add(Variables.MonthStatistic[i].April);
+                line.Add(Variables.MonthStatistic[i].May);
+                line.Add(Variables.MonthStatistic[i].June);
+                line.Add(Variables.MonthStatistic[i].July);
+                line.Add(Variables.MonthStatistic[i].August);
+                line.Add(Variables.MonthStatistic[i].September);
+                line.Add(Variables.MonthStatistic[i].October);
+                line.Add(Variables.MonthStatistic[i].November);
+                line.Add(Variables.MonthStatistic[i].December);
+            }
             Variables.LogModel.Profit = Math.Round(Profit, 3);
             Variables.LogModel.PercSC = percent;
             Variables.LogModel.PercentForTriggerM = Variables.PercentForTriggerM;
@@ -183,6 +201,8 @@ namespace RycharaStockAnalizer.Statistic
                 Console.ResetColor();
                 Console.WriteLine($" Monday: {Monday} Tuesday: {Tuesday} Wednesday: {Wednesday} Thursday: {Thursday} Friday: {Friday} | MondayM: {MondayM} TuesdayM: {TuesdayM} WednesdayM: {WednesdayM} ThursdayM: {ThursdayM} FridayM: {FridayM} VolSuccess: {VSuc} VolFail: {VFail} HighSuccess: {HSuc} HighFail: {HFail} BodySuccess: {BSuc} BodyFail: {BFail}");
                 Console.WriteLine(JsonConvert.SerializeObject(Variables.LogModel));
+                string path = Path.Combine(Environment.CurrentDirectory, "Data2");
+                Chart.Column<double, double, string>(line).SaveHtml(path, true);
             }
             else
             {

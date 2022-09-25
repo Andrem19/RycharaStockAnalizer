@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Plotly.NET.CSharp" Version="0.8.0" />
   </ItemGroup>
 
 </Project>
